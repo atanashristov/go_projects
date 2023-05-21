@@ -1,0 +1,1 @@
+docker run --rm -v ("$(pwd):/src" -replace '\\', '\\').ToLower() -w /src kjconroy/sqlc generate

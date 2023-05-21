@@ -100,3 +100,57 @@ SEE **Makefile** FOR ALL COMMANDS.
 References:
 
 - [Golang migrate library](https://github.com/golang-migrate/migrate)
+
+### Lecture 4: Generate GRUD
+
+Compare:
+
+- [GORM](https://gorm.io/): complex and slow
+- [sqlx](https://github.com/jmoiron/sqlx): faster and easy to use but not safe (catch typos at runtime)
+- [sqlc](https://sqlc.dev/): fast, easy to use and safe. Generates go code from sql queries
+
+Using `sqlc` in this course.
+
+Install `sqlc` with:
+
+```sh
+go install github.com/kyleconroy/sqlc/cmd/sqlc@latest
+```
+
+Initialize _sqlc.yaml_ config file: `sqlc init`
+
+Change the _sqlc.yaml_ like this:
+
+```yaml
+version: "1"
+packages:
+  - name: "db"
+    path: "./db/sqlc"
+    queries: "./db/query/"
+    schema: "./db/migration/"
+    engine: "postgresql"
+    emit_json_tags: true
+    emit_prepared_queries: false # we make it `true` for optimization later
+    emit_interface: false
+    emit_exact_table_names: false # exact is accounts table -> "Accounts" struct, and we want "Account" struct
+```
+
+To generate the code run: `sqlc generate`.
+
+**Windows** notes:
+
+On Windows we have to use docker to generate the files, because on native Windows wqe get error:
+
+Pull docker image: `docker pull kjconroy/sqlc`
+
+Run sqlc using docker in Powershell: `docker run --rm -v ("$(pwd):/src" -replace '\\', '\\').ToLower() -w /src kjconroy/sqlc generate`
+
+Created a powershell script: `.\sqlcw.ps1`.
+
+You have to initialize a go module with: `go mod init github.com/atanashristov/simplebank`
+, followed by `go mod tidy` to install any dependencies.
+
+References:
+
+- [sqlc settings](https://docs.sqlc.dev/en/latest/reference/config.html)
+- [sqlc running with Docker](https://docs.sqlc.dev/en/stable/overview/install.html)

@@ -33,4 +33,7 @@ psql:
 dbshell:
 	docker exec -it simplebank-postgres15 /bin/sh
 
-.PHONY: network postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 new_migration psql dbshell
+sqlc:
+	sqlc generate
+
+.PHONY: network postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 new_migration psql dbshell sqlc
