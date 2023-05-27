@@ -145,7 +145,7 @@ Pull docker image: `docker pull kjconroy/sqlc`
 
 Run sqlc using docker in Powershell: `docker run --rm -v ("$(pwd):/src" -replace '\\', '\\').ToLower() -w /src kjconroy/sqlc generate`
 
-Created a powershell script: `.\sqlcw.ps1`.
+Created a powershell script: `.\sqlcw.ps1` for this.
 
 You have to initialize a go module with: `go mod init github.com/atanashristov/simplebank`
 , followed by `go mod tidy` to install any dependencies.
@@ -154,3 +154,54 @@ References:
 
 - [sqlc settings](https://docs.sqlc.dev/en/latest/reference/config.html)
 - [sqlc running with Docker](https://docs.sqlc.dev/en/stable/overview/install.html)
+
+### Lecture 5: Unit tests for database CRUD
+
+We need to install Postgres driver: `go get github.com/lib/pq`.
+
+It adds it to the `go.mod` file:
+
+```sh
+require github.com/lib/pq v1.10.9 // indirect
+```
+
+This reference has to be imported in the go source files like this:
+
+```go
+import (
+  _ "github.com/lib/pq"
+)
+```
+
+In the tests we do not call directly any code from `lib/pq` but we have to include it, because we specify "postgres" as a `dbDriver` param to `sql.Open()`.
+
+Then we run `go mod tidy` and the above reference in `go.mod` removed the "indirect".
+
+To evaluate the test results we use the `testify` package.
+
+Install `testify` with: `go get github.com/stretchr/testify`
+
+Skip this: ... Then we run `go mod tidy` and the above reference in `go.mod` removed the "indirect".
+
+Then import the `require` only in the `account_test.go`:
+
+```go
+import (
+ "context"
+ "testing"
+
+  "github.com/stretchr/testify/require"
+)
+```
+
+See:
+
+- simplebank\db\sqlc\main_test.go
+- simplebank\db\sqlc\account_test.go
+
+References:
+
+- [pq - A pure Go postgres driver for Go's database/sql package](https://github.com/lib/pq)
+- [testify](https://github.com/stretchr/testify)
+
+### Lecture 6: DB Transactions in Golang
