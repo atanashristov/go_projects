@@ -36,4 +36,7 @@ dbshell:
 sqlc:
 	sqlc generate
 
+test:
+	go test -v -cover ./...
+
 .PHONY: network postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 new_migration psql dbshell sqlc
