@@ -9,6 +9,12 @@ postgres:
 createdb:
 	docker exec -it simplebank-postgres15 createdb --username=postgres --owner=postgres simple_bank
 
+startdb:
+	docker start simplebank-postgres15
+
+stopdb:
+	docker start simplebank-postgres15
+
 dropdb:
 	docker exec -it simplebank-postgres15 dropdb --username=postgres simple_bank
 
@@ -39,4 +45,4 @@ sqlc:
 test:
 	go test -v -cover ./...
 
-.PHONY: network postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 new_migration psql dbshell sqlc
+.PHONY: network postgres createdb startdb stopdb dropdb migrateup migratedown migrateup1 migratedown1 new_migration psql dbshell sqlc test
