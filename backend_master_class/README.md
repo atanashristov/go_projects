@@ -93,7 +93,7 @@ docker exec -it simplebank-postgres15 psql -U postgres simple_bank
 
 **Makefile** - create `Makefile` in the root of the project, so you can run: `make dropdb`, `make createdb`, etc.
 
-Note: On **Windows** instll the `make` command with `choco install make`
+Note: On **Windows** install the `make` command with `choco install make`
 
 SEE **Makefile** FOR ALL COMMANDS.
 
