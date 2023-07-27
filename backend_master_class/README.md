@@ -204,4 +204,22 @@ References:
 - [pq - A pure Go postgres driver for Go's database/sql package](https://github.com/lib/pq)
 - [testify](https://github.com/stretchr/testify)
 
-### Lecture 6: DB Transactions in Golang
+## Section 2: RESTful HTTP JSON Api (Gin + JWT + PASETO)
+
+### Lecture 11: Implementing RESTful HTTP API in Go with Gin
+
+Install Gin with: `go get -u github.com/gin-gonic/gin`.
+
+Verify is installed in `simplebank\go.mod`.
+
+Created API server in `simplebank\api\server.go`.
+
+See:
+
+[Gin GitHub page](https://github.com/gin-gonic/gin)
+
+[Gin quick start](https://gin-gonic.com/docs/quickstart/)
+
+[Gin model validation](https://gin-gonic.com/docs/examples/binding-and-validation/)
+
+[Go validator, oneOf](https://pkg.go.dev/github.com/go-playground/validator#hdr-One_Of)
