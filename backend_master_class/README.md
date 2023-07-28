@@ -223,3 +223,23 @@ See:
 [Gin model validation](https://gin-gonic.com/docs/examples/binding-and-validation/)
 
 [Go validator, oneOf](https://pkg.go.dev/github.com/go-playground/validator#hdr-One_Of)
+
+## Lecture 12: Configurations with Viper
+
+Install Viper: `go get github.com/spf13/viper`
+
+Now you can see it in `go.mod`.
+
+Add `app.env` file. Load config from `util/config.go`.
+
+Read configs inside `main.go`.
+
+Override environment variable (bash): `SERVER_ADDRESS=0.0.0.:8081 make server`.
+
+Override environment variable (powershell): `$env:SERVER_ADDRESS='0.0.0.0:8081' ; make server`.
+
+Note: to delete env variable (powershell): `Remove-Item -Path Env:SERVER_ADDRESS -Verbose`
+
+See:
+
+[Viper](https://github.com/spf13/viper)
