@@ -230,16 +230,55 @@ Install Viper: `go get github.com/spf13/viper`
 
 Now you can see it in `go.mod`.
 
-Add `app.env` file. Load config from `util/config.go`.
+Add `app.env` file. Load config from `util/config.go`
 
 Read configs inside `main.go`.
 
-Override environment variable (bash): `SERVER_ADDRESS=0.0.0.:8081 make server`.
+Override environment variable (bash): `SERVER_ADDRESS=0.0.0.:8081 make server`
 
-Override environment variable (powershell): `$env:SERVER_ADDRESS='0.0.0.0:8081' ; make server`.
+Override environment variable (powershell): `$env:SERVER_ADDRESS='0.0.0.0:8081' ; make server`
 
 Note: to delete env variable (powershell): `Remove-Item -Path Env:SERVER_ADDRESS -Verbose`
 
 See:
 
 [Viper](https://github.com/spf13/viper)
+
+## Lecture 13: Mock DB to test the API
+
+Install `gomock`: `go install go.uber.org/mock/mockgen@latest`
+
+Add package `go get go.uber.org/mock/mockgen/model`
+
+Check `mockgen` is on go bin: `ls ~/go/bin`
+
+Check `mockgen` available (bash): `which mockgen`
+
+Check `mockgen` available (powershell): `Get-Command mockgen`
+
+Replace DB Store object with an interface in `store.go`
+
+Set `emit_interface: true` in `sqlc.yaml`
+
+Run `.\sqlcw.ps1`, it generates `simplebank\db\sqlc\querier.go` file
+
+Embed `Querier` in the `Store` interface:
+
+```go
+type Store interface {
+ Querier
+ TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error)
+}
+```
+
+We create mocks in the `db\mock` folder using reflection. We provide the URI path to the `sqlc` files, the name of the interface `Store`, the name of the package `mockdb` and a destination folder:
+
+```sh
+mockgen -package mockdb -destination db/mock/store.go github.com/atanashristov/simplebank/db/sqlc Store
+```
+
+This is also added to the `Makefile`, so just use: `make mock`
+
+See:
+
+[gomock](https://github.com/uber-go/mock)
